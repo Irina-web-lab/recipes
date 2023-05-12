@@ -13,16 +13,14 @@ function App() {
   const [myRecipes, setMyRecipes] = useState([]);
   const [wordSubmitted, setWordSubmitted] = useState('egg');
 
-  const functionResponse = async () => {
-    const response = await fetch (`https://api.edamam.com/api/recipes/v2?type=public&q=${wordSubmitted}&app_id=${MY_ID}&app_key=${MY_KEY}`);
+useEffect(() => {
+  const getRecipe = async () => {
+    const response = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${wordSubmitted}&app_id=${MY_ID}&app_key=${MY_KEY}`);
     const data = await response.json();
-    console.log(data.hits);
     setMyRecipes(data.hits);
   }
-  useEffect(()=> {
-        functionResponse();
-
-    }, [wordSubmitted]);
+  getRecipe()
+}, [wordSubmitted])
 
       const myRecipeSearch = (e) => {
           console.log(e.target.value);
